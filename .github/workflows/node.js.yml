@@ -22,7 +22,7 @@ jobs:
       run: npm install
 
     - name: Build Docker Image
-      run: docker build -t pradip-inventyv/ci-cd .
+      run: docker build -t pradippipaliya/ci-cd .
 
     - name: Login to Docker Hub
       uses: docker/login-action@v3
@@ -31,4 +31,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         
     - name: Push Docker Image to Docker Hub
-      run: docker push pradippipaliya/nginx
+      run: docker push pradippipaliya/ci-cd
