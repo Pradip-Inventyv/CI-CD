@@ -49,7 +49,7 @@ jobs:
         SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' pradippipaliya/ci-cd)
         echo "SHA Digest: $SHA_DIGEST"
         echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/sha_digest.txt
-    - name: Commit SHA Digest File
+    - name: Commit SHA Digest Files
       run: |
         git config --global user.email "pradippipaliyainventyv@gmail.com"
         git config --global user.name "Pradip-inventyv"
