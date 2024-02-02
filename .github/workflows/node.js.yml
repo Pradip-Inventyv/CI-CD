@@ -32,8 +32,8 @@ jobs:
         
     - name: Push Docker Image to Docker Hub
       run: |
-        docker push pradippipaliya/ci-cd
         echo "${{ env.DOCKER_IMAGE_DIGEST }}" > docker_image_digest.txt
+        docker push pradippipaliya/ci-cd
       env:
         DOCKER_IMAGE_DIGEST: $(docker inspect --format='{{index .RepoDigests 0}}' pradippipaliya/ci-cd | cut -d '@' -f 2)
 
