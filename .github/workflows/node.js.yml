@@ -49,8 +49,8 @@ jobs:
 
     - name: Commit and Push Changes
       run: |
-        git config --local user.email "pradippipaliyainventyv@gmail.com"
-        git config --local user.name "Pradip-Inventyv"
+        git config --global user.email "pradippipaliyainventyv@gmail.com"
+        git config --global user.name "Pradip-Inventyv"
         git add docker_image_digest.txt
         git commit -m "Add Docker image digest"
         git push origin main
