@@ -53,6 +53,7 @@ jobs:
       run: |
         git config --global user.email "pradippipaliyainventyv@gmail.com"
         git config --global user.name "Pradip-inventyv"
+        git remote -v
         git add $GITHUB_WORKSPACE/sha_digest.txt
         git commit -m "Add SHA Digest file"
         git push
