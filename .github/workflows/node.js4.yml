@@ -1,7 +1,7 @@
 name: Node.js CI with Docker
 
 on:
-  push:
+  pull_request:
     branches:
       - main  # Adjust the branch as needed
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
             repo: context.repo.repo,
             pull_number: context.payload.pull_request.number
           });
-          const reviewers = ['Raj-inventyv', 'Shivang-inventyv']; // Add your reviewers' usernames here
+          const reviewers = ['reviewer1', 'reviewer2']; // Add your reviewers' usernames here
           await Promise.all(reviewers.map(async (reviewer) => {
             await github.pulls.requestReviewers({
               owner: context.repo.owner,
