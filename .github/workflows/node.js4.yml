@@ -3,7 +3,7 @@ name: Node.js CI with Docker
 on:
   push:
     branches:
-      - main  # Adjust the branch as neededD
+      - main  # Adjust the branch as needed
   workflow_dispatch:
 
 jobs:
@@ -42,7 +42,7 @@ jobs:
             repo: context.repo.repo,
             pull_number: context.payload.pull_request.number
           });
-          const reviewers = ['Raj-inventyv', '20DCE095']; // Add your reviewers' usernames here
+          const reviewers = ['Raj-inventyv', 'Shivang-inventyv']; // Add your reviewers' usernames here
           await Promise.all(reviewers.map(async (reviewer) => {
             await github.pulls.requestReviewers({
               owner: context.repo.owner,
@@ -52,12 +52,17 @@ jobs:
             });
           }));
           
-    # Wait for approval
-    - name: Wait for Approval
-      uses: andstor/wait-for-approval@v2
-      with:
-        github-token: ${{ secrets.PERSONAL_TOKEN }}
-
+    # Poll for pull request approvals
+    - name: Wait for Approvals
+      id: wait-for-approvals
+      run: |
+        while [[ $(curl -s -H "Authorization: Bearer $PERSONAL_TOKEN" \
+                -H "Accept: application/vnd.github.v3+json" \
+                https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/reviews | \
+                jq -r 'map(select(.state == "APPROVED")) | length') -lt 2 ]]; do
+            sleep 10
+        done
+        
     # Proceed only after approval
     - name: Push Docker Image to Docker Hub
       run: docker push pradippipaliya/ci-cd
