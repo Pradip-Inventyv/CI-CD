@@ -46,7 +46,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image to Docker Hub
-        run: docker push ${{ github.actor }}/ci-cd:${{ github.event.inputs.tag }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd:${{ github.event.inputs.tag }}
 
       - name: Get SHA Digest
         run: |
