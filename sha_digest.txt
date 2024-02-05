@@ -1,1 +1,1 @@
-pradippipaliya/ci-cd@sha256:ae022e86c67aefe953ffc57e4457f68e9d2f5d202c3e56cf1615d89a74f21be7
+pradippipaliya/ci-cd@sha256:594e62af8448b7f90bc30d1e100cedb798199f7f26cf15add35376aab2222d9c
