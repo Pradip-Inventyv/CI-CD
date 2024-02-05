@@ -1,7 +1,7 @@
 name: Node.js CI with Docker
 
 on:
-  workflow_dispatch:  # Triggered manually
+  workflow_dispatch:  # Triggered manuallyy
 
 jobs:
   build:
