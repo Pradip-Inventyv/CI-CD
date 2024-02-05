@@ -16,6 +16,11 @@ jobs:
       DOCKER_USERNAME: ${{ github.actor }}
 
     steps:
+      - name: Convert GitHub username to lowercase
+        run: |
+          export DOCKER_USERNAME_LOWER=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')
+          echo "::set-env name=DOCKER_USERNAME_LOWER::${DOCKER_USERNAME_LOWER}"
+
       - name: Checkout Repository
         uses: actions/checkout@v3
 
@@ -29,7 +34,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t ${{ github.actor }}/ci-cd:${{ env.IMAGE_TAG }} .
+          docker build -t ${{ env.DOCKER_USERNAME_LOWER }}/ci-cd:${{ env.IMAGE_TAG }} .
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -38,11 +43,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image to Docker Hub
-        run: docker push ${{ github.actor }}/ci-cd:${{ env.IMAGE_TAG }}
+        run: docker push ${{ env.DOCKER_USERNAME_LOWER }}/ci-cd:${{ env.IMAGE_TAG }}
 
       - name: Get SHA Digest
         run: |
-          SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ github.actor }}/ci-cd:${{ env.IMAGE_TAG }})
+          SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.DOCKER_USERNAME_LOWER }}/ci-cd:${{ env.IMAGE_TAG }})
           echo "SHA Digest: $SHA_DIGEST"
           echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/sha_digest.txt
         
