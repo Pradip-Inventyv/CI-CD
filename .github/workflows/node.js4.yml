@@ -37,21 +37,24 @@ jobs:
       with:
         github-token: ${{ secrets.PERSONAL_TOKEN }}
         script: |
-          const { data: pullRequest } = await github.pulls.get({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: context.payload.pull_request.number
-          });
-          const reviewers = ['Shivang-inventyv', '
-          raj-inventyv']; // Add your reviewers' usernames here
-          await Promise.all(reviewers.map(async (reviewer) => {
-            await github.pulls.requestReviewers({
+          async function run() {
+            const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number,
-              reviewers: [reviewer]
+              pull_number: context.payload.pull_request.number
             });
-          }));
+            const reviewers = ['Raj-inventyv', 'Shivang-inventyv']; // Add your reviewers' usernames here
+            await Promise.all(reviewers.map(async (reviewer) => {
+              await github.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                reviewers: [reviewer]
+              });
+            }));
+          }
+          run();
+
           
     # Debug GitHub context
     - name: Debug GitHub context
