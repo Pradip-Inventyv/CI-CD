@@ -11,14 +11,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      IMAGE_TAG: ${{ github.event.inputs.tag }}
 
     steps:
       - name: Convert GitHub username to lowercase
         id: lowercase_username
-        run: echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]'
+        run: echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]' > username.txt
       
+      - name: Read GitHub username from file
+        id: read_username
+        run: echo "::set-output name=username::$(cat username.txt)"
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
@@ -35,8 +37,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          DOCKER_USERNAME=$(echo "${{ steps.lowercase_username.outputs.stdout }}")
-          docker build -t $DOCKER_USERNAME/ci-cd:${{ env.IMAGE_TAG }} .
+          docker build -t ${{ steps.read_username.outputs.username }}/ci-cd:${{ github.event.inputs.tag }} .
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -45,11 +46,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image to Docker Hub
-        run: docker push $DOCKER_USERNAME/ci-cd:${{ env.IMAGE_TAG }}
+        run: docker push ${{ steps.read_username.outputs.username }}/ci-cd:${{ github.event.inputs.tag }}
 
       - name: Get SHA Digest
         run: |
-          SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' $DOCKER_USERNAME/ci-cd:${{ env.IMAGE_TAG }})
+          SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ steps.read_username.outputs.username }}/ci-cd:${{ github.event.inputs.tag }})
           echo "SHA Digest: $SHA_DIGEST"
           echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/sha_digest.txt
         
