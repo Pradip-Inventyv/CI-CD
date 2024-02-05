@@ -43,7 +43,7 @@ jobs:
 
       - name: Get SHA Digest
         run: |
-          SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ steps.read_username.outputs.username }}/ci-cd:${{ github.event.inputs.tag }})
+          SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ secrets.DOCKER_USERNAME }}/ci-cd:${{ github.event.inputs.tag }})
           echo "SHA Digest: $SHA_DIGEST"
           echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/sha_digest.txt
         
