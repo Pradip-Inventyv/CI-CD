@@ -58,7 +58,7 @@ jobs:
           pwd
 
       - name: Commit and Push Changes
-        if: github.event_name == 'workflow_dispatch'  # Only execute when triggered manually
+        if: github.event_name == 'workflow_dispatch'  # Only execute when triggered manuallyy
         run: |
           git config --global user.email "pradippipaliyainventyv@gmail.com"
           git config --global user.name "Pradip-Inventyv"
