@@ -48,7 +48,7 @@ jobs:
         cat sha_digest.json
 
     - name: Upload SHA digest in artifact
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v2
       with:
           name: sha_digest.json
           path: ${{ github.workspace }}/sha_digest.json
