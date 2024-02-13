@@ -10,6 +10,11 @@ jobs:
   download_context_artifact:
     runs-on: ubuntu-latest
     steps:
+      - name: run command
+        run: |
+          ls -al
+          pwd
+      
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
