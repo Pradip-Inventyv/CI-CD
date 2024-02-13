@@ -6,7 +6,7 @@ on:
     types:
       - completed
 
-jobs:
+jobs: 
   download_context_artifact:
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +21,7 @@ jobs:
             });
             
             let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "sha_digest.json"
+              return artifact.name == "context.json"
             })[0];
             
             let download = await github.rest.actions.downloadArtifact({
@@ -36,6 +36,7 @@ jobs:
             
       - name: 'Unzip artifact'
         run: unzip sha_digest.zip
+
       - name: 'Return Parsed JSON'
         uses: actions/github-script@v6
         id: return-parsed-json
@@ -44,8 +45,10 @@ jobs:
             let fs = require('fs');
             let data = fs.readFileSync('./sha_digest.json');
             return JSON.parse(data);
+
     outputs:
       property_one: ${{fromJSON(steps.return-parsed-json.outputs.result).prop_1}}
+
   log_context_values:
     needs:
       - download_context_artifact
