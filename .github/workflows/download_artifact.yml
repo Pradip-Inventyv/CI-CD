@@ -7,17 +7,50 @@ on:
       - completed
 
 jobs:
-  display_sha_digest:
+  download_context_artifact:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Download SHA Digest Artifact
-        uses: actions/download-artifact@v3
+      - name: 'Download artifact'
+        uses: actions/github-script@v6
         with:
-          name: sha_digest.txt
-
-      - name: Show SHA Digest
-        run: cat sha_digest.txt
+          script: |
+            let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: context.payload.workflow_run.id,
+            });
+            
+            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "sha_digest.json"
+            })[0];
+            
+            let download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            
+            let fs = require('fs');
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/sha_digest.zip`, Buffer.from(download.data));
+            
+      - name: 'Unzip artifact'
+        run: unzip sha_digest.zip
+      - name: 'Return Parsed JSON'
+        uses: actions/github-script@v6
+        id: return-parsed-json
+        with:
+          script: |
+            let fs = require('fs');
+            let data = fs.readFileSync('./sha_digest.json');
+            return JSON.parse(data);
+    outputs:
+      property_one: ${{fromJSON(steps.return-parsed-json.outputs.result).prop_1}}
+  log_context_values:
+    needs:
+      - download_context_artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Log Context Values'
+        run: |
+          echo "${{ needs.download_context_artifact.outputs.property_one }}"
