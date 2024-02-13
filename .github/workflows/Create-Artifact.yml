@@ -38,7 +38,7 @@ jobs:
       run: |
         SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' pradippipaliya/ci-cd)
         echo "SHA Digest: $SHA_DIGEST"
-        echo "$SHA_DIGEST" > $GITHUB_WORKSPACE/.github/workflows/sha_digest.txt
+        echo "$SHA_DIGEST" > .github/workflows/sha_digest.txt
 
     - name: store SHA in artifact
       if: success()
