@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Some Step 
-        run: echo "Hello!"
+        run: echo "Hello pradip!"
 
   job_producing_data:  
     runs-on: ubuntu-latest
