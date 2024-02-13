@@ -14,7 +14,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: sha_digest.json
-          path: /home/runner/work/CI-CD/CI-CD
+          path: ${{ github.workspace }}/sha_digest.json
           
       - name: Return Parsed JSON
         id: return-parsed-json
