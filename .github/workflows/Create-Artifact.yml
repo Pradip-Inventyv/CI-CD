@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: "development"
-    
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -40,23 +40,8 @@ jobs:
         printf '{ 
           "prop_1": "%s"
         }' "$SHA_DIGEST" >> sha_digest.json
-
-    - name: run command
-      run: |
-        ls -al
-        pwd
-        cat sha_digest.json
-
     - name: Upload SHA digest in artifact
       uses: actions/upload-artifact@v3
       with:
           name: sha_digest.json
           path: ./sha_digest.json
-
-    # - name: Commit SHA Digest File
-    #   run: |
-    #     git config --global user.email "pradippipaliyainventyv@gmail.com"
-    #     git config --global user.name "Pradip-Inventyv"
-    #     git add $GITHUB_WORKSPACE/sha_digest.json
-    #     git commit -m "Add SHA Digest file"
-    #     git push      
