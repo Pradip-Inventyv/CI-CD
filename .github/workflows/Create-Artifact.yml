@@ -51,4 +51,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: sha_digest.json
-          path: ./sha_digest.json
+          path: ${{ github.workspace }}/sha_digest.json
