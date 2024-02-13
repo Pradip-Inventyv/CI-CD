@@ -17,7 +17,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20'  # Adjust the Node.js version as neededd
+        node-version: '14'  # Adjust the Node.js version as neededd
 
     - name: Install Dependencies
       run: npm install
@@ -53,10 +53,10 @@ jobs:
           name: sha_digest.json
           path: ./sha_digest.json
 
-    - name: Commit SHA Digest File
-      run: |
-        git config --global user.email "pradippipaliyainventyv@gmail.com"
-        git config --global user.name "Pradip-Inventyv"
-        git add $GITHUB_WORKSPACE/sha_digest.json
-        git commit -m "Add SHA Digest file"
-        git push      
+    # - name: Commit SHA Digest File
+    #   run: |
+    #     git config --global user.email "pradippipaliyainventyv@gmail.com"
+    #     git config --global user.name "Pradip-Inventyv"
+    #     git add $GITHUB_WORKSPACE/sha_digest.json
+    #     git commit -m "Add SHA Digest file"
+    #     git push      
