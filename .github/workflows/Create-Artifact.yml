@@ -48,7 +48,15 @@ jobs:
         cat sha_digest.json
 
     - name: Upload SHA digest in artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
           name: sha_digest.json
           path: ${{ github.workspace }}/sha_digest.json
+
+    - name: Commit SHA Digest File
+      run: |
+        git config --global user.email "pradippipaliyainventyv@gmail.com"
+        git config --global user.name "Pradip-Inventyv"
+        git add $GITHUB_WORKSPACE/sha_digest.txt
+        git commit -m "Add SHA Digest file"
+        git push      
