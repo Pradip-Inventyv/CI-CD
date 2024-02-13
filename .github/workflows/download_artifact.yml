@@ -14,7 +14,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: sha_digest.json
-          path: ./sha_digest.json
       
       - name: Return Parsed JSON
         id: return-parsed-json
