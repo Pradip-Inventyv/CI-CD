@@ -37,12 +37,12 @@ jobs:
     - name: Get SHA Digest
       run: |
         SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' pradippipaliya/ci-cd)
-        echo "SHA Digest: $SHA_DIGEST"
-        echo "$SHA_DIGEST" > .github/workflows/sha_digest.txt
+        printf '{ 
+              "prop_1": "$SHA_DIGEST"
+            }' >> sha_digest.json
 
-    - name: store SHA in artifact
-      if: success()
+    - name: Upload SHA digest in artifact
       uses: actions/upload-artifact@v3
       with:
-        name: sha_digest.txt
-        path: ./sha_digest.txt
+          name: sha_digest.json
+          path: ./sha_digest.json  
