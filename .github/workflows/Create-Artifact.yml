@@ -41,8 +41,13 @@ jobs:
           "prop_1": "%s"
         }' "$SHA_DIGEST" >> sha_digest.json
 
+    - name: run command
+      run: |
+        ls -al
+        pwd
+
     - name: Upload SHA digest in artifact
       uses: actions/upload-artifact@v3
       with:
           name: sha_digest.json
-          path: ./
+          path: ./sha_digest.json
