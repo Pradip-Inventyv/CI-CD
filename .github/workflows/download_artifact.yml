@@ -1,26 +1,23 @@
-name: Deploy for Node.js
+name: Display SHA Digest
 
 on:
-  push:
-    branches:
-      - "main"
   workflow_run:
     workflows: ["Node.js CI with Docker"]
     types:
       - completed
 
 jobs:
-  deploy:
+  display_sha_digest:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download SHA Digest Artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: sha_digest
-        path: ./sha_digest.txt
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Use SHA Digest
-      run: |
-        SHA_DIGEST=$(cat ./sha_digest.txt)
-        echo "Using SHA Digest: $SHA_DIGEST"
+      - name: Download SHA Digest Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: sha_digest.txt
+
+      - name: Show SHA Digest
+        run: cat sha_digest.txt
