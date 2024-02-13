@@ -51,4 +51,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: sha_digest.json
-          path: artifacts/
+          path: ./sha_digest.json
