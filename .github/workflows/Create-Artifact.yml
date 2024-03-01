@@ -32,12 +32,14 @@ jobs:
     #     password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Extract Docker credentials
-      run: echo '${{ secrets.SECRETS }}' > ~/secrets.json 
+      run: |
+        DOCKER_USERNAME=$(echo "$SECRETS" | jq -r '.DOCKER_USERNAME')
+        DOCKER_PASSWORD=$(echo "$SECRETS" | jq -r '.DOCKER_PASSWORD')
+        echo "::set-env name=DOCKER_USERNAME::$DOCKER_USERNAME"
+        echo "::set-env name=DOCKER_PASSWORD::$DOCKER_PASSWORD"
 
     - name: Login to Docker registry
       run: |
-          echo "$(cat /secrets.json)" | jq -r '.DOCKER_USERNAME' > /DOCKER_USERNAME
-          echo "$(cat /secrets.json)" | jq -r '.DOCKER_PASSWORD' > /DOCKER_PASSWORD
           docker login -u $(cat /DOCKER_USERNAME) -p $(cat /DOCKER_PASSWORD)
 
     - name: Push Docker Image to Docker Hub
