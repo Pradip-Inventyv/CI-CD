@@ -62,7 +62,7 @@ jobs:
     #   run: |
     #     SHA_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' pradippipaliya/ci-cd)
     #     printf '{  
-    #       "prop_1": "%s"
+    #       "prop_1": "%s" 
     #     }' "$SHA_DIGEST" >> sha_digest.json
     # - name: Upload SHA digest in artifact
     #   uses: actions/upload-artifact@v3
