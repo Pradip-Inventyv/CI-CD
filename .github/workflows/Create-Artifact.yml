@@ -35,8 +35,8 @@ jobs:
       run: |
         DOCKER_USERNAME=$(echo "$SECRETS" | jq -r '.DOCKER_USERNAME')
         DOCKER_PASSWORD=$(echo "$SECRETS" | jq -r '.DOCKER_PASSWORD')
-        echo "::set-env name=DOCKER_USERNAME::$DOCKER_USERNAME"
-        echo "::set-env name=DOCKER_PASSWORD::$DOCKER_PASSWORD"
+        echo "::set-output name=DOCKER_USERNAME::$DOCKER_USERNAME"
+        echo "::set-output name=DOCKER_PASSWORD::$DOCKER_PASSWORD"
 
     - name: Login to Docker registry
       run: |
