@@ -46,8 +46,8 @@ jobs:
     - name: Extract
       id: extract
       run: |
-        DOCKER_USERNAME=$(echo "$SECRETS1" | jq -r '.DOCKER_USERNAME')
-        DOCKER_PASSWORD=$(echo "$SECRETS1" | jq -r '.DOCKER_PASSWORD')
+        DOCKER_USERNAME=$(echo "$SECRETS" | jq -r '.DOCKER_USERNAME')
+        DOCKER_PASSWORD=$(echo "$SECRETS" | jq -r '.DOCKER_PASSWORD')
         echo "DOCKER_USERNAME=$DOCKER_USERNAME" >> $GITHUB_ENV
         echo "DOCKER_PASSWORD=$DOCKER_PASSWORD" >> $GITHUB_ENV
 
@@ -56,7 +56,7 @@ jobs:
         docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
     
     - name: Push Docker Image to Docker Hub
-      run: docker push raj456/nodeci:latest
+      run: docker push pradippipaliya/ci-cd
       
     # - name: Get SHA Digest
     #   run: |
