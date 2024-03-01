@@ -53,7 +53,7 @@ jobs:
 
     - name: Login to Docker registry
       run: |
-        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker login -u "$DOCKER_USERNAME" --password-stdin "$DOCKER_PASSWORD"
     
     - name: Push Docker Image to Docker Hub
       run: docker push pradippipaliya/ci-cd
