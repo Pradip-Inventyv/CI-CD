@@ -41,7 +41,7 @@ jobs:
 
     - name: Login to Docker registry
       run: |
-          docker login -u $(cat /steps.extract.outputs.DOCKER_USERNAME) -p $(cat /steps.extract.outputs.DOCKER_PASSWORD)
+          docker login -u $(steps.extract.outputs.DOCKER_USERNAME) -p $(steps.extract.outputs.DOCKER_PASSWORD)
 
     - name: Push Docker Image to Docker Hub
       run: docker push pradippipaliya/ci-cd
