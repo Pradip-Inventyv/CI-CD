@@ -32,7 +32,7 @@ jobs:
     #     password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Extract Docker credentials
-      run: echo '${{ secrets.secrets }}' > ~/secrets.json 
+      run: echo '${{ secrets.SECRETS }}' > ~/secrets.json 
 
     - name: Login to Docker registry
       run: |
