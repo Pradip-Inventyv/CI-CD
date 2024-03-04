@@ -58,7 +58,7 @@ jobs:
       run: docker push pradippipaliya/ci-cd 
 
     - name: Set up Google Cloud
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v3
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: pub-sub-416205
