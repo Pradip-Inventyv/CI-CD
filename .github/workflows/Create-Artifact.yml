@@ -57,6 +57,11 @@ jobs:
     - name: Push Docker Image to Docker Hub
       run: docker push pradippipaliya/ci-cd 
 
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
     - name: Set up Google Cloud
       uses: google-github-actions/setup-gcloud@v2
       with:
