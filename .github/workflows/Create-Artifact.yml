@@ -26,8 +26,8 @@ jobs:
     - name: Install Dependencies
       run: npm install
 
-    - name: Build Docker Image
-      run: docker build -t pradippipaliya/ci-cd .
+    # - name: Build Docker Image
+    #   run: docker build -t pradippipaliya/ci-cd .
 
     # - name: Login to Docker Hub
     #   uses: docker/login-action@v3
@@ -54,8 +54,20 @@ jobs:
     #   run: |
     #     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
     
-    - name: Push Docker Image to Docker Hub
-      run: docker push pradippipaliya/ci-cd 
+    # - name: Push Docker Image to Docker Hub
+    #   run: docker push pradippipaliya/ci-cd 
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        # context: .
+        # file: .Dockerfile  # Adjust path to Dockerfile as needed
+        # platforms: linux/amd64  # Adjust platforms as needed
+        push: true
+        tags: pradippipaliya/ci-cd:latest
 
     - id: 'auth'
       uses: 'google-github-actions/auth@v1'
