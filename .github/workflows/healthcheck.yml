@@ -28,7 +28,7 @@ jobs:
       - name: Run Container for Health Check
         run: |
           docker run -d --name ci-cd-container -p 80:80 pradippipaliya/ci-cd:latest
-          sleep 30  # Adjust sleep time based on how long it takes for your app to start
+          sleep 60  # Adjust sleep time based on how long it takes for your app to start
 
       - name: Health Check
         id: healthcheck
