@@ -83,7 +83,7 @@ jobs:
 
     - name: Publish message to Pub/Sub
       run: |
-        gcloud pubsub topics publish Docker_registory --message='{"branch":"main","commit":"${{ github.sha }}","image":"pradippipaliya/ci-cd:latest"}'
+        gcloud pubsub topics publish Email-notify --message='{"branch":"main","commit":"${{ github.sha }}","image":"pradippipaliya/ci-cd:latest"}'
       
     # - name: Get SHA Digest
     #   run: |
